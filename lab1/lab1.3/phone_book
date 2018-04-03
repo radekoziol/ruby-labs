@@ -1,0 +1,86 @@
+
+def add_to_contacts(arg)
+  arr = arg.split(' ')
+  who = arr[0]
+  phone_numbers = arr[1]
+  statuses = arr[2]
+  # Adding
+  @contacts[who] = [phone_numbers,statuses]
+  # Updating
+  File.open(@path, 'wb') { |f| f.write(Marshal.dump(@contacts))}
+end
+
+def search_for(arg)
+
+  arr = arg.split(' ')
+  who = arr[0]
+  phone_number = arr[1]
+  status = arr[2]
+
+  if @contacts[who] != nil
+    return @contacts[who]
+  end
+
+  @contacts.each do |name, array|
+    array.each do |ph, stat|
+        if phone_number.include? ph
+          return @contacts[name]
+        end
+        if status.include? stat
+          return @contacts[name]
+        end
+      end
+  end
+
+end
+
+def update_contact(who, name = who,phone_number = @contacts[who][0],status = contacts[who][1])
+  arr = arg.split(' ')
+  who = arr[0]
+  name = arr[1]
+  phone_number = arr[2]
+  status = arr[3]
+  if who != name
+    @contacts.delete(who)
+    add_to_contacts(name.to_s + phone_number.to_s + status.to_s)
+  end
+end
+
+def delete_contact(who)
+  @contacts.delete(who)
+end
+
+def get_phone_num(who)
+  @contacts[who][0]
+end
+
+def get_status(who)
+  @contacts[who][1]
+end
+
+def print_phone_book
+  @contacts.each do |name, array|
+    print "********************\n"
+    print "Name: " + name + "\n"
+      print "Phone numbers :"
+      print array[0]
+      print "\n"
+    print "Status :"
+    print array[1]
+    print "\n"
+  end
+  print "********************\n"
+end
+
+def print_group(status)
+  @contacts.each do |name, array|
+    array[1].each{|x|
+      if x == status
+        print(@contacts[name])
+        print("\n")
+      end
+    }
+    end
+end
+
+

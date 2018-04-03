@@ -1,0 +1,110 @@
+def print_type(str)
+
+  str = str.chomp("\n")
+
+  strings = str.split(/\d/)
+  numbers = str.split(/\D/)
+
+  if strings != []
+    strings.delete("")
+    print "Strings: "
+    print strings
+    print "\n"
+  end
+  if numbers != []
+    numbers.delete("")
+    print "Numbers: "
+    print numbers
+    print "\n"
+  end
+end
+
+def print_occurence(map)
+
+  map.each do |key, value|
+    if key =~ /[a-zA-Z]/
+      puts "#{key}(#{value})"
+    else
+      puts "%#{key.ord}(#{value})"
+    end
+  end
+
+end
+
+def count_occ (str)
+
+  str = str.chomp("\n")
+  map = Hash.new
+
+
+  if str.length > 5
+    strings = str.split("")
+
+    strings.each {|str|
+      leng = str.length - 1
+      c = map[str].to_i + 1
+      map[str] = c
+    }
+  else
+    map[str] = 1
+
+  end
+
+  return map
+
+end
+
+
+##
+# This method reads user's input smarter,
+# since it need not to store every input string
+#
+def read_input
+  loop do # infinite loop
+    print 'String: ' # prompt for input
+
+    response = gets # get the response -- gets returns nil on EOF
+
+    break unless response # break out of the loop unless the response is non-nil
+    p response.rstrip.downcase # do whatever you want with the response
+
+    map = count_occ response
+
+    print_occurence map
+
+    # print_type(response)
+  end
+
+  read_input1
+end
+
+def to_map(response)
+
+  response = response.chomp("\n")
+  response = response.chomp(")")
+  map = response.split("(")
+
+  return map
+end
+
+def read_input1
+  loop do # infinite loop
+    print ': ' # prompt for input
+
+    response = gets # get the response -- gets returns nil on EOF
+
+    break unless response # break out of the loop unless the response is non-nil
+    p response.rstrip.downcase # do whatever you want with the response
+
+    map = to_map(response)
+
+    c = map[1].to_i
+    char = map[0]
+
+    c.times do
+      print map[0]
+    end
+    print "\n"
+
+  end
+end

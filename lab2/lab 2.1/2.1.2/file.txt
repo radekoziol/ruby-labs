@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+require ’ rdoc ’
+if ARGV [ 0 ] == ’ -- man ’
+manual = DATA . read
+# h tml = RDoc : : Markup : : ToHtml . new (RDoc : :O p ti o n s . new )
+ansi = RDoc : : Markup : : ToAnsi . new ( )
+puts ansi . convert ( manual )
+end
+__END__
+= Name
+
+pmh−convert . rb − converts an OAI−PMH document
+into the DOAJ format ; optionally also
+into the DBLP or PBN .
+13
+14 = SYNOPSIS
+15
+16 pmh−convert . rb [−−help ] [−−man ] [−−version ] [−−
+doajLogin username ] [−−doajPass password ]
+[ startDate ] [ endDate ]
+17
+18 == Examples
+19
+20 ∗ +pmh−convert . rb+ Generate , in the current
+directory , DOAJ file for the entire
+period of time , i . e . , for all ( input )
+records
+21
+22 ∗ <tt>pmh−convert . rb 2013−01−01 2013−07−30</tt
+> Generate , in the current directory ,
+DOAJ file for a given period of time .
+23
+24 Author : : Stanis ł aw Polak ( mailto : polak@agh .
+edu . pl )

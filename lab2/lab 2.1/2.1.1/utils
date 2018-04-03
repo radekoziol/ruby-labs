@@ -1,0 +1,70 @@
+
+
+##
+# This method reads user's input smarter,
+# since it need not to store every input string
+#
+
+def read_input_smarter
+  loop do # infinite loop
+    print 'String: ' # prompt for input
+
+    response = gets # get the response -- gets returns nil on EOF
+
+    break unless response # break out of the loop unless the response is non-nil
+    p response.rstrip.downcase # do whatever you want with the response
+
+    leng = response.length - 1
+    c = @input[leng].to_i + 1
+    @input[leng ] = c
+  end
+end
+
+##
+# This method reads user's input less smart,
+# since it needs to store every input string
+
+def read_input
+  loop do # infinite loop
+    print 'String: ' # prompt for input
+
+    response = gets # get the response -- gets returns nil on EOF
+
+    break unless response # break out of the loop unless the response is non-nil
+    response.rstrip.downcase # do whatever you want with the response
+
+    @input.push(response)
+  end
+end
+
+##
+# This method count occurrence of strings of some length
+#
+# # = Example
+#
+#   count_occurence ["as", "dd", "qw", "ghhh"] = { 2 => 3, 4 => 1}
+
+def count_occurence(args)
+  map = Hash.new
+
+  args.each { |str|
+    leng = str.length - 1
+    c = map[leng].to_i + 1
+    map[leng ] = c
+  }
+  return map
+end
+
+##
+# Prints map results
+#
+
+def print_result(map)
+  print "Length of string \tOccurence\n"
+  map.each do |s_len, count|
+    print s_len
+    print " \t\t\t\t\t"
+    print count
+    print "\n"
+  end
+end

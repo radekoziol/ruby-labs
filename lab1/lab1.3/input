@@ -1,0 +1,65 @@
+require 'getoptlong'
+load 'phone_book'
+
+def run()
+
+  opts = GetoptLong.new(
+      ['--help', '-h', GetoptLong::NO_ARGUMENT],
+      ['--search_for', GetoptLong::REQUIRED_ARGUMENT],
+      ['--view_group', GetoptLong::REQUIRED_ARGUMENT],
+      ['--view_contact', GetoptLong::REQUIRED_ARGUMENT],
+      ['--add_contact', GetoptLong::REQUIRED_ARGUMENT],
+      ['--delete_contact', GetoptLong::REQUIRED_ARGUMENT],
+      ['--update_contact', GetoptLong::REQUIRED_ARGUMENT],
+      ['--view_contacts', GetoptLong::NO_ARGUMENT]
+  )
+
+  dir = nil
+  name = nil
+  repetitions = 1
+  opts.each do |opt, arg|
+    case opt
+      when '--help'
+        puts <<-EOF
+phonebook [OPTION]
+  -h, --help:
+     show help
+
+  --add_contact [name] [phone_n] [group]':
+     adds new contact
+
+  --update_contact '[who] [name] [phone_n] [group]:
+     deletes contact
+
+  --delete_contact [name]
+     deletes contact
+
+  --search_for '[name] [phone_n] [group]':
+     returns contact with as described
+
+  --view_group [group_name]
+     prints all contacts from given group
+
+  --view_contact [name]
+     prints given contact info
+
+  --view_contacts
+      prints all contacts
+
+        EOF
+      when '--add_contact'
+        add_to_contacts(arg)
+      when '--update_contact'
+        update_contact(arg)
+      when '--delete_contact'
+        delete_contact(arg)
+      when '--search_for'
+        search_for(arg)
+      when '--view_group'
+        print_group(arg)
+      when '--view_contacts'
+        print_phone_book
+    end
+  end
+
+end

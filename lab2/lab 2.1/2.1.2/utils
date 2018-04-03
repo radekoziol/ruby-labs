@@ -1,0 +1,50 @@
+
+
+def read_input_smarter
+  loop do # infinite loop
+    print 'String: ' # prompt for input
+
+    response = gets # get the response -- gets returns nil on EOF
+
+    break unless response # break out of the loop unless the response is non-nil
+    p response.rstrip.downcase # do whatever you want with the response
+
+    leng = response.length - 1
+    c = @input[leng].to_i + 1
+    @input[leng ] = c
+  end
+end
+
+def read_input
+  loop do # infinite loop
+    print 'String: ' # prompt for input
+
+    response = gets # get the response -- gets returns nil on EOF
+
+    break unless response # break out of the loop unless the response is non-nil
+    response.rstrip.downcase # do whatever you want with the response
+
+    @input.push(response)
+  end
+end
+
+def count_occurence(args)
+  map = Hash.new
+
+  args.each { |str|
+    leng = str.length
+    c = map[leng].to_i + 1
+    map[leng ] = c
+  }
+  return map
+end
+
+def print_result(map)
+  print "Length of string \tOccurence\n"
+  map.each do |s_len, count|
+    print s_len
+    print " \t\t\t\t\t"
+    print count
+    print "\n"
+  end
+end
