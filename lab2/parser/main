@@ -1,9 +1,8 @@
 load 'utils'
 
-@output_latex = ""
 @input_latex_path = "/home/radekkoziol/Projects/RubymineProjects/labs/lab2/parser/latex.txt"
 @input_bibtex_path = "/home/radekkoziol/Projects/RubymineProjects/labs/lab2/parser/bibtex.txt"
-
+@output_latex_path = "/home/radekkoziol/Projects/RubymineProjects/labs/lab2/parser/output_latex.txt"
 
 parse
 

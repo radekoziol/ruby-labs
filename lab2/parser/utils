@@ -1,34 +1,71 @@
-
-
 def parse
+
+  reference = []
+  @spec = ""
   File.open(@input_latex_path, "r") do |f|
     f.each_line do |line|
-      reference = []
-      spec = []
-      if line =~ %r{%% \\\w+{\w+}}
-        spec = line.scan(%r{\\\w+{\w+}})
-        append_reference(reference, spec)
+      if line =~ %r{^%% \\\w+{\w+}}
+        @spec = line.scan(%r{\w+{\w+}.+}).to_s
+        append_reference(reference, @spec)
+        write_reference(reference, @spec)
+        reference = []
+        @spec = ""
+      else
+        line =~ %r{.+\\\cite{\w+}}
+        reference = line.scan(%r{{\w+}})
       end
-      if line =~ %r{\\\w+{\w+}}
-        reference = line.scan(%r{\\\w+{\w+}})
-      end
+
     end
   end
+
 end
 
 
 def append_reference(reference, spec)
-  File.open(@input_bibtex_path, "r") do |f|
-    f.each_line do |line|
-      reference = []
-      spec = []
-      if line =~ %r{%% \\\w+{\w+}}
-        spec = line.scan(%r{\\\w+{\w+}})
-        append_reference(reference, spec)
-      end
-      if line =~ %r{\\\w+{\w+}}
-        reference = line.scan(%r{\\\w+{\w+}})
+
+  fields1 = spec.scan(/{([^"]*)}/)
+  fields2 = spec.scan(/"([^"]*)""/)
+
+
+  data = File.read(@input_bibtex_path)
+  bib_ref = data.split "@"
+
+  c1 = c2 = 0
+  bib_ref.each {|art|
+
+    if art.include? reference[c1][1..reference[0].length - 2]
+      art.each_line do |line|
+
+        if line.include? fields1[c1][c1]
+          temp = line.scan(/"([^"]*)"/)
+
+          spec.gsub! fields1[c1][c1], temp[0][0]
+          # c1 += 1
+        end
+
+        if line.include? fields2[c2][c2][0..fields2[c2][c2].length - 2]
+          temp = line.scan(/"([^"]*)"/)
+
+          spec.gsub! fields2[c2][c2], temp[0][0]
+
+          # c += 1
+        end
       end
     end
-  end
+
+  }
+
+
+end
+
+
+def write_reference(reference, spec)
+
+  open('myfile.out', 'w') { |f|
+    f.puts "Hello, world."
+  }
+
+
+
+
 end
