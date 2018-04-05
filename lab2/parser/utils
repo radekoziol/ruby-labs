@@ -1,0 +1,34 @@
+
+
+def parse
+  File.open(@input_latex_path, "r") do |f|
+    f.each_line do |line|
+      reference = []
+      spec = []
+      if line =~ %r{%% \\\w+{\w+}}
+        spec = line.scan(%r{\\\w+{\w+}})
+        append_reference(reference, spec)
+      end
+      if line =~ %r{\\\w+{\w+}}
+        reference = line.scan(%r{\\\w+{\w+}})
+      end
+    end
+  end
+end
+
+
+def append_reference(reference, spec)
+  File.open(@input_bibtex_path, "r") do |f|
+    f.each_line do |line|
+      reference = []
+      spec = []
+      if line =~ %r{%% \\\w+{\w+}}
+        spec = line.scan(%r{\\\w+{\w+}})
+        append_reference(reference, spec)
+      end
+      if line =~ %r{\\\w+{\w+}}
+        reference = line.scan(%r{\\\w+{\w+}})
+      end
+    end
+  end
+end
