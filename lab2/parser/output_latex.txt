@@ -1,0 +1,7 @@
+Informacje na ten temat znajdują się w \cite{Bailey} oraz \cite{Bay1}.
+\begin{thebibliography}{9}
+  \bibtem{Bailey}
+    \textbf D. H. Bailey and P. N. Swarztrauber,  The fractional Fourier transform and applications,
+  \bibtem{Bay1}
+    \textbf A. Bayliss and C. I. Goldstein and E. Turkel,  An iterative method for the Helmholtz equation,
+\end{thebibliography}

@@ -6,7 +6,7 @@ def parse
     f.each_line do |line|
       if line =~ %r{^%% \\\w+{\w+}}
         @spec = line.scan(%r{\w+{\w+}.+}).to_s
-        append_reference(reference, @spec)
+        @spec = append_reference(reference, @spec)
         write_reference(reference, @spec)
         reference = []
         @spec = ""
@@ -26,34 +26,33 @@ def append_reference(reference, spec)
   fields1 = spec.scan(/{([^"]*)}/)
   fields2 = spec.scan(/"([^"]*)""/)
 
+  spec = spec + spec
 
   data = File.read(@input_bibtex_path)
   bib_ref = data.split "@"
 
-  c1 = c2 = 0
-  bib_ref.each {|art|
-
-    if art.include? reference[c1][1..reference[0].length - 2]
-      art.each_line do |line|
-
-        if line.include? fields1[c1][c1]
-          temp = line.scan(/"([^"]*)"/)
-
-          spec.gsub! fields1[c1][c1], temp[0][0]
-          # c1 += 1
-        end
-
-        if line.include? fields2[c2][c2][0..fields2[c2][c2].length - 2]
-          temp = line.scan(/"([^"]*)"/)
-
-          spec.gsub! fields2[c2][c2], temp[0][0]
-
-          # c += 1
+  c = c1 = c2 = 0
+  while c != reference.size
+    bib_ref.each {|art|
+      if art.include? reference[c][1..reference[c].length - 2]
+        art.each_line do |line|
+          if line.include? fields1[0][0]
+            temp = line.split(/=/)[1]
+            temp = temp[0..temp.length-2]
+            spec.sub! fields1[0][0], temp
+          end
+          if line.include? fields2[c2][c2][0..fields2[c2][c2].length - 2]
+            temp = line.split(/=/)[1]
+            temp = temp[0..temp.length-2]
+            spec.sub! fields2[c2][c2], temp
+          end
         end
       end
-    end
+    }
+    c += 1
+  end
 
-  }
+  spec
 
 
 end
@@ -61,11 +60,25 @@ end
 
 def write_reference(reference, spec)
 
-  open('myfile.out', 'w') { |f|
-    f.puts "Hello, world."
+  spec = spec.delete '""' '[' '\\\\' '{' '}'
+  spec = spec.split(/\]/)
+
+
+  open(@output_latex_path, 'w') {|f|
+    str = ""
+    str += File.read(@input_latex_path).split(/%/)[0]
+    str += "\\begin{thebibliography}{9}\n"
+
+    c = 0
+    reference.each do |ref|
+      str += "  \\bibtem" + ref + "\n"
+      str += "    \\" + spec[c] + "\n"
+      c += 1
+    end
+
+    str += "\\end{thebibliography}\n"
+    f.puts str
   }
-
-
 
 
 end
