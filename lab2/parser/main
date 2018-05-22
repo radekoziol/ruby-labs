@@ -2,19 +2,20 @@ load 'utils'
 
 
 # Example input
-# @input_latex_path = "input_latex.txt"
-# @input_bibtex_path = "bibtex.txt"
-# @output_latex_path = "output_latex.txt"
+@input_latex_path = "input_latex.txt"
+@input_bibtex_path = "bibtex.txt"
+@output_latex_path = "output_latex.txt"
 
-if ARGV[2] != nil
-  @input_latex_path = ARGV[0]
-  @input_bibtex_path = ARGV[1]
-  @output_latex_path = ARG[2]
-else
-  print "Arguments are:\n input_latex_path input_bibtex_path output_latex_path"
-  exit 0
-end
+# if ARGV[2] != nil
+#   @input_latex_path = ARGV[0]
+#   @input_bibtex_path = ARGV[1]
+#   @output_latex_path = ARGV[2]
+# else
+#   print "Arguments are:\n input_latex_path input_bibtex_path output_latex_path\n"
+#   exit 0
+# end
 
 parse
-
+# print "OUTPUT:\n"
+# print system("cat " + ARGV[2])
 

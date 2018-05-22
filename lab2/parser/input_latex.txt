@@ -1,2 +1,2 @@
 Informacje na ten temat znajdują się w \cite{Bailey} oraz \cite{Bay1}.
-%% \textbf{author} "title"
+%% \textbf{author} "year"
