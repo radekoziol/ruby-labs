@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 require 'minitest/autorun'
-load '../lib/client.rb'
-load '../lib/category.rb'
-load '../lib/product.rb'
-load '../lib/sales_man.rb'
+load '../lib/grocerygem/client.rb'
+load '../lib/grocerygem/category.rb'
+load '../lib/grocerygem/product.rb'
+load '../lib/grocerygem/sales_man.rb'
 
 
 # Tests
