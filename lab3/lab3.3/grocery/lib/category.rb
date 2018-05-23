@@ -1,8 +1,13 @@
 class Category
-  include Grocery
+  # include Grocery
 
-  def initialize(vat)
+  def initialize(name,vat)
+    @name = name
     @vat = vat
+  end
+
+  def to_s
+    @name
   end
 
 end

@@ -1,4 +1,4 @@
-module Grocery
+class Grocery
 
   @id_counter = 1
 
@@ -10,8 +10,12 @@ module Grocery
     @grocery.length
   end
 
-  def << (val)
-    @grocery.push(val)
+  def delete_client (client)
+    @grocery.delete client
+  end
+
+  def << (client)
+    @grocery.push client unless @grocery.include? client
   end
 
   def to_s
